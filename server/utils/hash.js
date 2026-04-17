@@ -1,0 +1,25 @@
+const bcrypt = require('bcryptjs');
+
+const SALT_ROUNDS = 12;
+
+/**
+ * Hash a plain-text password
+ * @param {string} password
+ * @returns {Promise<string>} bcrypt hash
+ */
+const hashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(SALT_ROUNDS);
+  return bcrypt.hash(password, salt);
+};
+
+/**
+ * Compare plain-text password against a hash
+ * @param {string} password
+ * @param {string} hash
+ * @returns {Promise<boolean>}
+ */
+const comparePassword = async (password, hash) => {
+  return bcrypt.compare(password, hash);
+};
+
+module.exports = { hashPassword, comparePassword };
